@@ -57,81 +57,80 @@
 ```
 
 ```javascript
-```havascript
 // ===================================================
-	// Optimized VAST Ads Configuration with videojs-ima
-	// ===================================================
+// Optimized VAST Ads Configuration with videojs-ima
+// ===================================================
 
-	const playerId = 'content_video';
-	const adTagUrl = 'https://xxxxxxxxxxxxxxxxxxxxxxx';
+const playerId = 'content_video';
+const adTagUrl = 'https://xxxxxxxxxxxxxxxxxxxxxxx';
 
-	// Video.js Player Initialization
-	const player = videojs(playerId);
+// Video.js Player Initialization
+const player = videojs(playerId);
 
-	// Check if the user is on a mobile device
-	const mobileCheck = () => {
-		const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-		const mobileRegex = /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od|ad)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino|crkey/i;
-		const additionalMobileRegex = /(mobile|tablet|ipad|playbook|silk|kindle|opera mini|opera mobi|blackberry|bb10|playstation vita|nokia|lumia|webos|samsung|huawei|oppo|vivo|xiaomi|miui)/i;
-		return mobileRegex.test(userAgent) || additionalMobileRegex.test(userAgent);
-	};
+// Check if the user is on a mobile device
+const mobileCheck = () => {
+	const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+	const mobileRegex = /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od|ad)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino|crkey/i;
+	const additionalMobileRegex = /(mobile|tablet|ipad|playbook|silk|kindle|opera mini|opera mobi|blackberry|bb10|playstation vita|nokia|lumia|webos|samsung|huawei|oppo|vivo|xiaomi|miui)/i;
+	return mobileRegex.test(userAgent) || additionalMobileRegex.test(userAgent);
+};
 
-	// IMA Plugin Configuration with Optimized Settings
-	const imaOptions = {
-		adTagUrl,
-		adsRenderingSettings: {
-			enablePreloading: true, // Preload ads for faster playback
-			// bitrate: 1500,         // Optimize for mobile and slow connections
-			uiElements: ['adAttribution', 'countdown'], // Essential UI elements
-		},
-		autoPlayAdBreaks: true,    // Automatically play VMAP or ad rules
-		disableAdControls: true,   // Remove player controls during ads
-		showCountdown: true,       // Display ad countdown timer
-		forceNonLinearFullSlot: true, // Pause video for non-linear ads
-		vastLoadTimeout: 3000,     // Lower timeout to reduce user frustration
-		preventLateAdStart: true,  // Avoid starting ads late
-		numRedirects: 2,           // Limit VAST redirects for better performance
-		vpaidMode: google.ima.ImaSdkSettings.VpaidMode.ENABLED, // Enable interactive ads
-	};
+// IMA Plugin Configuration with Optimized Settings
+const imaOptions = {
+	adTagUrl,
+	adsRenderingSettings: {
+		enablePreloading: true, // Preload ads for faster playback
+		// bitrate: 1500,         // Optimize for mobile and slow connections
+		uiElements: ['adAttribution', 'countdown'], // Essential UI elements
+	},
+	autoPlayAdBreaks: true,    // Automatically play VMAP or ad rules
+	disableAdControls: true,   // Remove player controls during ads
+	showCountdown: true,       // Display ad countdown timer
+	forceNonLinearFullSlot: true, // Pause video for non-linear ads
+	vastLoadTimeout: 3000,     // Lower timeout to reduce user frustration
+	preventLateAdStart: true,  // Avoid starting ads late
+	numRedirects: 2,           // Limit VAST redirects for better performance
+	vpaidMode: google.ima.ImaSdkSettings.VpaidMode.ENABLED, // Enable interactive ads
+};
 
-	// Initialize video.js IMA plugin
-	// Must be done here!
-	player.ima(imaOptions);
+// Initialize video.js IMA plugin
+// Must be done here!
+player.ima(imaOptions);
 
-	// Event-Listener für das Ende des Videos
-	player.on('ended', function() {
-		console.log('Das Video ist fertig abgespielt!');
+// Event-Listener für das Ende des Videos
+player.on('ended', function() {
+	console.log('Das Video ist fertig abgespielt!');
 
-		
-		// Optional: Weiterleitung oder andere Aktionen
-		// window.location.href = "https://example.com";
-	});
+	
+	// Optional: Weiterleitung oder andere Aktionen
+	// window.location.href = "https://example.com";
+});
 
-	// ===================================================
+// ===================================================
 
-	const generateButton = document.querySelector('#generateButton');
+const generateButton = document.querySelector('#generateButton');
 
-	if (generateButton) {
+if (generateButton) {
 
-    // ...
-	   
-	      setTimeout(function() {
-    				// Mobile-specific logic for user interaction
-    				if (mobileCheck()) {
-    					// Wait for user interaction to initialize ad display container
-    					const generateButton = document.getElementById('generateButton');
-    					generateButton.addEventListener('click', () => {
-    						player.ima.initializeAdDisplayContainer();
-    						player.play();
-    					});
-    				} else {
-    					// Desktop users: Initialize ad container immediately
-    					player.ima.initializeAdDisplayContainer();
-    					player.play();
-    				}
-			     }, 1250);
-	    });
-	}
+// ...
+   
+      setTimeout(function() {
+			// Mobile-specific logic for user interaction
+			if (mobileCheck()) {
+				// Wait for user interaction to initialize ad display container
+				const generateButton = document.getElementById('generateButton');
+				generateButton.addEventListener('click', () => {
+					player.ima.initializeAdDisplayContainer();
+					player.play();
+				});
+			} else {
+				// Desktop users: Initialize ad container immediately
+				player.ima.initializeAdDisplayContainer();
+				player.play();
+			}
+		     }, 1250);
+    });
+}
 
 ```
 
