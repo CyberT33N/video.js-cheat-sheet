@@ -2,13 +2,6 @@
 
 
 
-# Init
-
-
-
-
-
-
 
 
 
@@ -134,5 +127,36 @@ if (generateButton) {
 
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_____________________________
+<br><br>
+<br><br>
+
+
+# Events
+
+## ended
+- Do something when video has ended
+```javascript
+// Event-Listener für das Ende des Videos
+player.on('ended', function() {
+	console.log('Das Video ist fertig abgespielt!');
+
+	
+	// Optional: Weiterleitung oder andere Aktionen
+	// window.location.href = "https://example.com";
+});
 
 ```
