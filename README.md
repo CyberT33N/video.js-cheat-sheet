@@ -7,12 +7,74 @@
 
 
 
+# API
 
+## src
+- Change video source of current player instance
+```javascript
+// Event-Listener für das Ende des Videos
+player.on('ended', function() {
+	// Neues Video setzen
+	 player.src([
+		{
+		    type: 'video/webm',
+		    src: './assets/videos/loading2.webm'
+		},
+		{
+		    type: 'video/mp4',
+		    src: './assets/videos/loading2.mp4'
+		}
+	 ]);
+
+   player.play();
+});
+
+```
+
+
+
+
+
+
+<br><br>
+<br><br>
+_____________________________
 <br><br>
 <br><br>
 
 
+# Events
 
+## ended
+- Do something when video has ended
+```javascript
+// Event-Listener für das Ende des Videos
+player.on('ended', function() {
+	console.log('Das Video ist fertig abgespielt!');
+
+	
+	// Optional: Weiterleitung oder andere Aktionen
+	// window.location.href = "https://example.com";
+});
+
+```
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_____________________________
+<br><br>
+<br><br>
+
+# videojs-ima
 
 
 
@@ -131,88 +193,14 @@ if (generateButton) {
 
 
 
-
-
-
-
-<br><br>
-<br><br>
-_____________________________
 <br><br>
 <br><br>
 
-
-
-# API
-
-## src
-- Change video source of current player instance
-```javascript
-// Event-Listener für das Ende des Videos
-player.on('ended', function() {
-	// Neues Video setzen
-	 player.src([
-		{
-		    type: 'video/webm',
-		    src: './assets/videos/loading2.webm'
-		},
-		{
-		    type: 'video/mp4',
-		    src: './assets/videos/loading2.mp4'
-		}
-	 ]);
-
-   player.play();
-});
-
-```
-
-
-
-
-
+## Restart
 
 <br><br>
-<br><br>
-_____________________________
-<br><br>
-<br><br>
 
-
-# Events
-
-## ended
-- Do something when video has ended
-```javascript
-// Event-Listener für das Ende des Videos
-player.on('ended', function() {
-	console.log('Das Video ist fertig abgespielt!');
-
-	
-	// Optional: Weiterleitung oder andere Aktionen
-	// window.location.href = "https://example.com";
-});
-
-```
-
-
-
-
-
-
-
-
-
-
-<br><br>
-<br><br>
-_____________________________
-<br><br>
-<br><br>
-
-# Restart
-
-## Play new video after first one with new VAST
+### Play new video after first one with new VAST
 ```javascript
 // Event-Listener für das Ende des Videos
 player.on('ended', function() {
