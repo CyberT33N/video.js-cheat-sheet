@@ -135,6 +135,40 @@ if (generateButton) {
 
 
 
+<br><br>
+<br><br>
+_____________________________
+<br><br>
+<br><br>
+
+
+
+# API
+
+## src
+- Change video source of current player instance
+```javascript
+// Event-Listener für das Ende des Videos
+player.on('ended', function() {
+	// Neues Video setzen
+	 player.src([
+		{
+		    type: 'video/webm',
+		    src: './assets/videos/loading2.webm'
+		},
+		{
+		    type: 'video/mp4',
+		    src: './assets/videos/loading2.mp4'
+		}
+	 ]);
+
+   player.play();
+});
+
+```
+
+
+
 
 
 
