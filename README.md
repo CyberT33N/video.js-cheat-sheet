@@ -160,3 +160,55 @@ player.on('ended', function() {
 });
 
 ```
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_____________________________
+<br><br>
+<br><br>
+
+# Restart
+
+## Play new video after first one with new VAST
+```javascript
+// Event-Listener für das Ende des Videos
+player.on('ended', function() {
+	// AdsManager zerstör
+	if (player.ima.getAdsManager()) {
+		player.ima.getAdsManager().destroy();
+		// console.log('AdsManager destroyed.');
+	 }
+  
+	 // Content als abgeschlossen signalisieren
+	 if (player.ima.adsLoader) {
+		player.ima.adsLoader.contentComplete();
+		// console.log('Content complete signaled to AdsLoader.');
+	 }
+
+	// Neues Video setzen
+	 player.src([
+		{
+		    type: 'video/webm',
+		    src: './assets/videos/loading2.webm'
+		},
+		{
+		    type: 'video/mp4',
+		    src: './assets/videos/loading2.mp4'
+		}
+	 ]);
+    
+	   player.ima.changeAdTag('xxxxxxxxxxxxxxxxxxxx');
+	   player.ima.requestAds();
+	   player.ima.initializeAdDisplayContainer();
+	   player.play();
+});
+```
