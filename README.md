@@ -11,6 +11,46 @@
 
 
 
+
+<br><br>
+<br><br>
+
+
+# Attributes
+
+
+<br><br>
+
+
+## poster (Thumbnail)
+- You can use poster attribute
+```
+<video id="content_video" class="video-js vjs-default-skin"
+  controls
+  preload="auto"
+  playsinline
+  poster="./assets/img/hero-7-video-frame.png"
+  data-setup='{ "controls": false, "autoplay": false, "preload": "auto" }'>
+>
+<source src="./assets/videos/loading.webm" type="video/webm">
+<source src="./assets/videos/loading.mp4"
+    type="video/mp4" />
+</video>
+```
+
+
+
+
+
+
+
+
+<br><br>
+______________________
+<br><br>
+
+
+
 # API
 
 ## src
