@@ -195,7 +195,10 @@ wrapperDiv.addEventListener(startEvent, initAdDisplayContainer);
 
 ### Click
 
+<br><br>
+
 #### Play new video after first one finished with new VAST
+- Works mobile and desktop
 ```javascript
 "use strict";
 
