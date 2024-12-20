@@ -94,6 +94,16 @@ _____________________________
 ## Player
 - https://docs.videojs.com/player#events
 
+
+### ads-request
+- Do something when ads request was sended..
+```
+ player.on('ads-request', () => {
+               console.log('Anzeigeanfrage gesendet.');
+           });
+           
+```
+
 ### ended
 - Do something when video has ended
 ```javascript
