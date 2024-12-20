@@ -108,6 +108,16 @@ player.on('ended', function() {
 
 ```
 
+### playing
+- Do something when video starts playing
+```javascript
+// Event-Listener für das Ende des Videos
+player.on('playing', function() {
+	console.log('Video is playing..');
+});
+
+```
+
 
 
 
