@@ -80,6 +80,8 @@ player.on('ended', function() {
 
 
 
+
+
 <br><br>
 <br><br>
 _____________________________
@@ -89,7 +91,10 @@ _____________________________
 
 # Events
 
-## ended
+## Player
+- https://docs.videojs.com/player#events
+
+### ended
 - Do something when video has ended
 ```javascript
 // Event-Listener für das Ende des Videos
