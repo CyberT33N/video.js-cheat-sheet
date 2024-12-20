@@ -115,8 +115,21 @@ player.on('ended', function() {
 	// Optional: Weiterleitung oder andere Aktionen
 	// window.location.href = "https://example.com";
 });
-
 ```
+
+
+<br><br>
+
+# Adend
+- Do something when ad has ended
+```javascript
+player.on('adend', function() {
+	//..
+```
+
+
+<br><br>
+
 
 ### playing
 - Do something when video starts playing
