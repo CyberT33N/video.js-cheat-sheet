@@ -3,6 +3,10 @@
 
 
 
+# docs
+- https://docs.videojs.com/docs/api/player.html#Methodserror
+
+
 
 
 
