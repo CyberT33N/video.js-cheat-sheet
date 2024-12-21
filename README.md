@@ -279,6 +279,190 @@ wrapperDiv.addEventListener(startEvent, initAdDisplayContainer);
 
 <br><br>
 
+#### Video after Video - Unique HTML Video elements
+- Works mobile and desktop
+- I guess this approach is more valid than the example below `Video after Video - Replace src and Ad Tag` because we do not re-use the same video.js player instead we create new instances.
+- This approach also contains adding a native banner while the video is running and also is adding one after the second run and hide it againa fter 5 seconds
+
+index.html
+```html
+<div class="video-container">
+	<video id="content_video" class="video-js vjs-default-skin vjs-fluid"
+	       controls
+	       preload="auto"
+	       playsinline
+	       data-setup='{ "controls": false, "autoplay": false, "preload": "auto", "fluid": true, "poster": "./assets/img/black.png" }'>
+	  <source src="./assets/videos/loading.webm" type="video/webm">
+	  <source src="./assets/videos/loading.mp4" type="video/mp4" />
+	</video>
+	<div class="overlay-banner">
+	  <script>
+	     (function(pqlp){
+		xxxxxxxxxxx
+	    })({})
+	  </script>
+	</div>
+	<!-- Play Button Overlay -->
+	<img src="./assets/img/start-button.png" id="playButton" class="play-button" />
+      </div>
+      <div class="video-container2">
+	<video id="content_video2" class="video-js vjs-default-skin vjs-fluid"
+	       controls
+	       preload="auto"
+	       playsinline
+	       data-setup='{ "controls": false, "autoplay": false, "preload": "auto", "fluid": true, "poster": "./assets/img/black.png" }'>
+	  <source src="./assets/videos/loading.webm" type="video/webm">
+	  <source src="./assets/videos/loading.mp4" type="video/mp4" />
+	</video>
+	<div class="overlay-banner">
+	  <script>
+	     (function(pqlp){
+		 xxxxxxx
+	    })({})
+	  </script>
+	</div>
+	<!-- Play Button Overlay -->
+	<img src="./assets/img/start-button.png" id="playButton" class="play-button" />
+</div>
+```
+
+ads.js:
+```
+"use strict";
+
+import mobileCheck from "./mobile-check.js";
+
+const adTags = {
+     // google
+     first: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_preroll_skippable&sz=640x480&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=',
+     // google
+     second: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_preroll_skippable&sz=640x480&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=',
+     // google
+     third: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_preroll_skippable&sz=640x480&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=',
+     // google
+     four: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_preroll_skippable&sz=640x480&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator='
+};
+
+
+// Player configurations
+const playerConfigs = [
+     { id: '#content_video', container: '.video-container', adTag: adTags.first },
+     { id: '#content_video2', container: '.video-container2', adTag: adTags.second }
+];
+
+// Create IMA options
+const createImaOptions = (adTagUrl) => ({
+     adTagUrl,
+     adsRenderingSettings: {
+          enablePreloading: true,
+          uiElements: ['adAttribution', 'countdown'],
+     },
+     autoPlayAdBreaks: true,
+     disableAdControls: true,
+     showCountdown: true,
+     forceNonLinearFullSlot: true,
+     vastLoadTimeout: 3000,
+     preventLateAdStart: true,
+     vpaidMode: google.ima.ImaSdkSettings.VpaidMode.ENABLED,
+});
+
+// Initialize players
+const players = playerConfigs.map(config => {
+     const player = videojs(config.id)
+     player.ima(createImaOptions(config.adTag))
+
+     return {
+          player,
+          config
+     }
+})
+
+$(document).ready(function () {
+     const $playButton = $(".play-button");
+     const $overlayBanner = $(".overlay-banner");
+     let activePlayerIndex = 0;
+     let count = 0;
+
+     // Initialize containers
+     const containers = playerConfigs.map(config => ({
+          $element: $(config.container),
+          $player: $(config.id)
+     }));
+
+     // Show only first container initially
+     containers.forEach(($container, index) => {
+          $container.$element.toggle(index === 0);
+     });
+
+     // Initialize ad display container for a player
+     const initAdDisplayContainer = (playerInstance) => {
+          console.log('initAdDisplayContainer()')
+          $playButton.hide();
+          playerInstance.ima.initializeAdDisplayContainer();
+          playerInstance.play();
+     };
+
+     // Handle mobile devices
+     const startEvent = mobileCheck() ? "touchend" : "click";
+     if (mobileCheck()) {
+          containers.forEach(container => container.$player.removeAttr("controls"));
+     }
+
+     // Attach event listeners to players
+     players.forEach(({ player, config }, index) => {
+          // Click/touch event for ad container initialization
+          $(config.id).on(startEvent, () => initAdDisplayContainer(player));
+
+          player.on('playing', () => {
+               setTimeout(() => {
+                    $overlayBanner.css('display', 'flex');
+               }, 3000)
+          });
+
+          // Video end event
+          player.on("ended", function () {
+               count++;
+
+               $overlayBanner.hide();
+
+               if (count === 2) {
+                    $overlayBanner.css('display', 'flex');
+
+                    setTimeout(() => {
+                         $overlayBanner.hide();
+                         count = 0;
+                    }, 5000);
+               }
+
+               // Toggle containers
+               activePlayerIndex = (activePlayerIndex + 1) % players.length;
+
+               containers.forEach((container, i) => {
+                    container.$element.toggle(i === activePlayerIndex);
+               });
+
+               // Reset for tdisplay of thumbnail
+               player.src([
+                    {
+                        type: "video/webm",
+                        src: "./assets/videos/loading.webm",
+                    },
+                    {
+                        type: "video/mp4",
+                        src: "./assets/videos/loading.mp4",
+                    },
+               ]);
+
+               $playButton.show();
+          });
+     });
+});
+```
+
+
+
+<br><br>
+
 #### Video after Video - Replace src and Ad Tag
 - Works mobile and desktop
 - **Not 100% sure but sometimes the second VAST is not playing. Maybe something wrong in code or the google IMA sdk is not allowing it**
