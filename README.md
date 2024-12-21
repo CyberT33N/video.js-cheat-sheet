@@ -279,8 +279,9 @@ wrapperDiv.addEventListener(startEvent, initAdDisplayContainer);
 
 <br><br>
 
-#### Play new video after first one finished with new VAST
+#### Video after Video - Replace src and Ad Tag
 - Works mobile and desktop
+- **Not 100% sure but sometimes the second VAST is not playing. Maybe something wrong in code or the google IMA sdk is not allowing it**
 ```javascript
 "use strict";
 
